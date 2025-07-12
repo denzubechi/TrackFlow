@@ -4,6 +4,7 @@ export interface Product {
   id: string
   trackingId: string
   name: string
+  email: string // Add email field
   createdAt: string
   updatedAt: string
   trackingEvents: TrackingEvent[]
@@ -41,7 +42,7 @@ export const fetchProducts = createAsyncThunk("products/fetchProducts", async ()
 
 export const createProduct = createAsyncThunk(
   "products/createProduct",
-  async (productData: { name: string; trackingId: string }) => {
+  async (productData: { name: string; trackingId: string; email: string }) => {
     const response = await fetch("/api/admin/products", {
       method: "POST",
       headers: {
@@ -58,7 +59,7 @@ export const createProduct = createAsyncThunk(
 
 export const updateProduct = createAsyncThunk(
   "products/updateProduct",
-  async ({ id, data }: { id: string; data: { name: string; trackingId: string } }) => {
+  async ({ id, data }: { id: string; data: { name: string; trackingId: string; email: string } }) => {
     const response = await fetch(`/api/admin/products/${id}`, {
       method: "PUT",
       headers: {

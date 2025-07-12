@@ -1,31 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { Package, Mail } from "lucide-react";
+import { Package, Github, Twitter, Linkedin, Mail } from "lucide-react";
 
 const footerLinks = {
-  product: [
-    { name: "Track Package", href: "/" },
-    { name: "How it Works", href: "/" },
-  ],
+  product: [{ name: "Track Package", href: "/" }],
   company: [
-    {
-      name: "About Us",
-      href: "https://api.whatsapp.com/send/?phone=18122079729",
-    },
-    {
-      name: "Contact",
-      href: "https://api.whatsapp.com/send/?phone=18122079729",
-    },
+    { name: "About", href: "/about" },
+
+    { name: "Contact", href: "/contact" },
   ],
-  support: [{ name: "Help Center", href: "#" }],
+  support: [{ name: "Features", href: "/features" }],
   legal: [
-    { name: "Privacy Policy", href: "#" },
-    { name: "Terms of Service", href: "#" },
+    { name: "Privacy", href: "/privacy" },
+    { name: "Terms", href: "/terms" },
   ],
 };
 
 const socialLinks = [
+  { name: "Twitter", href: "#", icon: Twitter },
+  { name: "GitHub", href: "#", icon: Github },
+  { name: "LinkedIn", href: "#", icon: Linkedin },
   { name: "Email", href: "mailto:hello@trackflow.com", icon: Mail },
 ];
 
@@ -35,13 +30,9 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
         <div className="py-12 lg:py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {" "}
-            {/* Adjusted grid columns */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
             {/* Brand Section */}
-            <div className="col-span-1 md:col-span-2 lg:col-span-1">
-              {" "}
-              {/* Adjusted column span */}
+            <div className="col-span-1 md:col-span-2 lg:col-span-2">
               <Link href="/" className="flex items-center space-x-2 mb-4">
                 <Package className="h-8 w-8 text-primary" />
                 <span className="text-xl font-bold">TrackFlow</span>
@@ -51,6 +42,8 @@ export default function Footer() {
                 your shipments from origin to destination with complete
                 transparency.
               </p>
+
+              {/* Social Links */}
               <div className="flex space-x-4">
                 {socialLinks.map((item) => {
                   const Icon = item.icon;
@@ -59,14 +52,6 @@ export default function Footer() {
                       key={item.name}
                       href={item.href}
                       className="text-muted-foreground hover:text-foreground transition-colors"
-                      target={
-                        item.href.startsWith("mailto:") ? "_self" : "_blank"
-                      } // Open mailto in same tab
-                      rel={
-                        item.href.startsWith("mailto:")
-                          ? ""
-                          : "noopener noreferrer"
-                      } // No rel for mailto
                     >
                       <span className="sr-only">{item.name}</span>
                       <Icon className="h-5 w-5" />
@@ -75,6 +60,7 @@ export default function Footer() {
                 })}
               </div>
             </div>
+
             {/* Product Links */}
             <div className="col-span-1">
               <h3 className="text-sm font-semibold text-foreground mb-4">
@@ -93,6 +79,7 @@ export default function Footer() {
                 ))}
               </ul>
             </div>
+
             {/* Company Links */}
             <div className="col-span-1">
               <h3 className="text-sm font-semibold text-foreground mb-4">
@@ -111,10 +98,11 @@ export default function Footer() {
                 ))}
               </ul>
             </div>
-            {/* Support & Legal Links combined for simplicity */}
+
+            {/* Support Links */}
             <div className="col-span-1">
               <h3 className="text-sm font-semibold text-foreground mb-4">
-                Support & Legal
+                Support
               </h3>
               <ul className="space-y-3">
                 {footerLinks.support.map((item) => (
@@ -127,6 +115,15 @@ export default function Footer() {
                     </Link>
                   </li>
                 ))}
+              </ul>
+            </div>
+
+            {/* Legal Links */}
+            <div className="col-span-1">
+              <h3 className="text-sm font-semibold text-foreground mb-4">
+                Legal
+              </h3>
+              <ul className="space-y-3">
                 {footerLinks.legal.map((item) => (
                   <li key={item.name}>
                     <Link
@@ -142,14 +139,26 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Section - Copyright & Essential Legal Links */}
+        {/* Bottom Section */}
         <div className="border-t py-6">
           <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
             <p className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} TrackFlow. All rights reserved.
             </p>
-
-            <div className="flex items-center space-x-6"></div>
+            <div className="flex items-center space-x-6">
+              <Link
+                href="/privacy"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="/terms"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Terms of Service
+              </Link>
+            </div>
           </div>
         </div>
       </div>

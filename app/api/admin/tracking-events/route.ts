@@ -1,5 +1,6 @@
-import { NextResponse } from "next/server"
-import { prisma } from "../../../../lib/prisma"
+import { NextResponse } from "next/server";
+import { prisma } from "../../../../lib/prisma";
+import { sendEmail, generateTrackingUpdateEmail } from "../../../../lib/email";
 
 export async function GET() {
   try {
@@ -16,21 +17,40 @@ export async function GET() {
       orderBy: {
         timestamp: "desc",
       },
-    })
+    });
 
-    return NextResponse.json(events)
+    return NextResponse.json(events);
   } catch (error) {
-    console.error("Error fetching tracking events:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    console.error("Error fetching tracking events:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }
 
 export async function POST(request: Request) {
   try {
-    const { locationDescription, productId } = await request.json()
+    const { locationDescription, productId } = await request.json();
 
     if (!locationDescription || !productId) {
-      return NextResponse.json({ error: "Location description and product ID are required" }, { status: 400 })
+      return NextResponse.json(
+        { error: "Location description and product ID are required" },
+        { status: 400 }
+      );
+    }
+
+    const product = await prisma.product.findUnique({
+      where: { id: productId },
+      select: {
+        name: true,
+        trackingId: true,
+        email: true,
+      },
+    });
+
+    if (!product) {
+      return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
 
     const event = await prisma.trackingEvent.create({
@@ -47,11 +67,37 @@ export async function POST(request: Request) {
           },
         },
       },
-    })
+    });
 
-    return NextResponse.json(event)
+    if (product.email) {
+      try {
+        const emailHtml = generateTrackingUpdateEmail(
+          product.name,
+          product.trackingId,
+          locationDescription,
+          event.timestamp.toLocaleString()
+        );
+
+        await sendEmail({
+          to: product.email,
+          subject: `📦 Package Update: ${product.name} - ${product.trackingId}`,
+          html: emailHtml,
+        });
+
+        console.log(
+          `Email notification sent to ${product.email} for tracking event`
+        );
+      } catch (emailError) {
+        console.error("Failed to send email notification:", emailError);
+      }
+    }
+
+    return NextResponse.json(event);
   } catch (error) {
-    console.error("Error creating tracking event:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    console.error("Error creating tracking event:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }

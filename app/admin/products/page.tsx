@@ -97,6 +97,7 @@ export default function ProductsPage() {
                     <TableRow>
                       <TableHead>Name</TableHead>
                       <TableHead>Tracking ID</TableHead>
+                      <TableHead>Email</TableHead>
                       <TableHead>Events</TableHead>
                       <TableHead>Created</TableHead>
                       <TableHead>Actions</TableHead>
@@ -109,6 +110,7 @@ export default function ProductsPage() {
                         <TableCell>
                           <code className="bg-muted px-2 py-1 rounded text-sm">{product.trackingId}</code>
                         </TableCell>
+                        <TableCell className="text-sm text-muted-foreground">{product.email}</TableCell>
                         <TableCell>{product.trackingEvents?.length || 0}</TableCell>
                         <TableCell>{new Date(product.createdAt).toLocaleDateString()}</TableCell>
                         <TableCell>

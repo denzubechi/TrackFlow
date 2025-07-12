@@ -4,10 +4,10 @@ import { prisma } from "../../../../../lib/prisma"
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const { id } = params
-    const { name, trackingId } = await request.json()
+    const { name, trackingId, email } = await request.json()
 
-    if (!name || !trackingId) {
-      return NextResponse.json({ error: "Name and tracking ID are required" }, { status: 400 })
+    if (!name || !trackingId || !email) {
+      return NextResponse.json({ error: "Name, tracking ID, and email are required" }, { status: 400 })
     }
 
     // Check if tracking ID already exists for a different product
@@ -27,6 +27,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       data: {
         name,
         trackingId,
+        email,
       },
       include: {
         trackingEvents: {
