@@ -79,7 +79,7 @@ export function generateTrackingUpdateEmail(
           <p>You can track your package in real-time by clicking the button below:</p>
           
           <a href="${
-            process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+            process.env.NEXT_PUBLIC_APP_URL || "https://trytrackflow.vercel.app"
           }/track/${trackingId}" class="button">
             Track Your Package
           </a>
