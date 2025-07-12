@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import { Package, Bell, ChevronDown, Menu, Settings, User } from "lucide-react"
+import * as React from "react";
+import Link from "next/link";
+import { Package, Bell, ChevronDown, Menu, Settings, User } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,27 +12,24 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+} from "@/components/ui/dropdown-menu";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
-const navigation = [
-  { name: "Track Package", href: "/" },
-  { name: "Admin", href: "/admin" },
-]
+const navigation = [{ name: "Track Package", href: "/" }];
 
 const adminNavigation = [
   { name: "Dashboard", href: "/admin" },
   { name: "Products", href: "/admin/products" },
   { name: "Tracking Events", href: "/admin/events" },
-]
+];
 
 interface NavbarProps {
-  isAdmin?: boolean
+  isAdmin?: boolean;
 }
 
 export default function Navbar({ isAdmin = false }: NavbarProps) {
-  const [isOpen, setIsOpen] = React.useState(false)
-  const currentNavigation = isAdmin ? adminNavigation : navigation
+  const [isOpen, setIsOpen] = React.useState(false);
+  const currentNavigation = isAdmin ? adminNavigation : navigation;
 
   return (
     <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -73,7 +70,10 @@ export default function Navbar({ isAdmin = false }: NavbarProps) {
               {/* User Menu */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center space-x-2">
+                  <Button
+                    variant="ghost"
+                    className="flex items-center space-x-2"
+                  >
                     <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
                       <User className="h-4 w-4" />
                     </div>
@@ -133,16 +133,26 @@ export default function Navbar({ isAdmin = false }: NavbarProps) {
                         </div>
                         <div>
                           <div className="text-base font-medium">Admin</div>
-                          <div className="text-sm text-muted-foreground">admin@trackflow.com</div>
+                          <div className="text-sm text-muted-foreground">
+                            admin@trackflow.com
+                          </div>
                         </div>
                       </div>
 
                       <div className="mt-3 space-y-1">
-                        <Button variant="ghost" className="w-full justify-start" onClick={() => setIsOpen(false)}>
+                        <Button
+                          variant="ghost"
+                          className="w-full justify-start"
+                          onClick={() => setIsOpen(false)}
+                        >
                           <User className="mr-2 h-4 w-4" />
                           Profile
                         </Button>
-                        <Button variant="ghost" className="w-full justify-start" onClick={() => setIsOpen(false)}>
+                        <Button
+                          variant="ghost"
+                          className="w-full justify-start"
+                          onClick={() => setIsOpen(false)}
+                        >
                           <Settings className="mr-2 h-4 w-4" />
                           Settings
                         </Button>
@@ -163,5 +173,5 @@ export default function Navbar({ isAdmin = false }: NavbarProps) {
         </div>
       </div>
     </nav>
-  )
+  );
 }
