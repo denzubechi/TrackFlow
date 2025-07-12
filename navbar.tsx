@@ -18,9 +18,9 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 const navigation = [{ name: "Track Package", href: "/" }];
 
 const adminNavigation = [
-  { name: "Dashboard", href: "/admin" },
-  { name: "Products", href: "/admin/products" },
-  { name: "Tracking Events", href: "/admin/events" },
+  { name: "Dashboard", href: "/shaku" },
+  { name: "Products", href: "/shaku/products" },
+  { name: "Tracking Events", href: "/shaku/events" },
 ];
 
 interface NavbarProps {
